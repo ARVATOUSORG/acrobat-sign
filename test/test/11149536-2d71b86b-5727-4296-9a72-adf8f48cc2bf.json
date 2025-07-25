@@ -1,0 +1,95 @@
+{
+	"info": {
+		"_postman_id": "11149536-2d71b86b-5727-4296-9a72-adf8f48cc2bf",
+		"name": "New Collection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "/transientDocuments - Upload Copy",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "e53420b0-07da-46e0-bc7c-3aa0203580f2",
+						"exec": [
+							"",
+							"var transResponse = pm.response.json();",
+							"",
+							"pm.globals.set(\"lastTrans\", transResponse.transientDocumentId);",
+							"",
+							"pm.test(\"Got Transient ID\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.transientDocumentId);",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"id": "11149536-62da5d14-743e-4a6c-b38e-679320770020",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					},
+					{
+						"key": "x-api-user",
+						"value": "email:{{env_adminEmail}}"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer {{access_token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "File-Name",
+							"value": "Basic-NDA.pdf",
+							"type": "text"
+						},
+						{
+							"key": "Mime-Type",
+							"value": ".pdf",
+							"type": "text"
+						},
+						{
+							"key": "File",
+							"type": "file",
+							"src": "postman-cloud:///1eef792b-2e63-4020-84b6-30d0f933d192"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://api.{{env_shard}}.{{env_domain}}.com/api/rest/v6/transientDocuments",
+					"protocol": "https",
+					"host": [
+						"api",
+						"{{env_shard}}",
+						"{{env_domain}}",
+						"com"
+					],
+					"path": [
+						"api",
+						"rest",
+						"v6",
+						"transientDocuments"
+					]
+				},
+				"description": "#### Upload a transient file\n\nThis call creates transient as a multi-part binary form-data upload.\n\nA transient file should be thought of as a temp-file. It can be used to create an agreement, a library template, a web-form, or even as the document for a megasign. For many of these processes when integrating through the API, the transient upload is the first step."
+			},
+			"response": []
+		}
+	]
+}
